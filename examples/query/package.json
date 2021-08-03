@@ -1,0 +1,21 @@
+{
+	"name": "hn.svelte.dev",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "svelte-kit dev --host 0.0.0.0",
+		"build": "svelte-kit build --verbose",
+		"preview": "svelte-kit preview",
+    "upload:clean": "gsutil -m rm -r gs://kit-query/*",
+    "upload": "gsutil -m -h 'Cache-Control:private, max-age=0, no-transform' rsync -r ./build gs://kit-query",
+    "deploy": "yarn build && yarn upload"
+
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-netlify": "workspace:*",
+		"@sveltejs/adapter-static": "workspace:*",
+		"@sveltejs/kit": "workspace:*",
+		"svelte": "^3.40.0"
+	}
+}

@@ -9,11 +9,15 @@ function page_store(value) {
 
 	function notify() {
 		ready = true;
-		store.update((val) => val);
+		store.update((val) => {
+			console.log('UPDATE', val);
+			return val;
+		});
 	}
 
 	/** @param {any} new_value */
 	function set(new_value) {
+		console.log('SET', new_value);
 		ready = false;
 		store.set(new_value);
 	}
@@ -24,6 +28,8 @@ function page_store(value) {
 		let old_value;
 		return store.subscribe((new_value) => {
 			if (old_value === undefined || (ready && new_value !== old_value)) {
+				console.log('OLD', old_value);
+				console.log('NEW', new_value);
 				run((old_value = new_value));
 			}
 		});
